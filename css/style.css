@@ -173,7 +173,7 @@ body {
   width: 100%;
   /* height: 40vh; */
   min-height: 260px;  
-  padding: 20px;
+  /* padding: 20px; */
 }
 
 .slider-icon {
@@ -195,7 +195,6 @@ body {
 
 .time {
   min-height: 124px;
-  margin-bottom: 10px;
   font-family: 'Arial-MT';
   font-size: 100px;
   letter-spacing: -4px;  
