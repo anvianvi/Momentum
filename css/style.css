@@ -267,7 +267,7 @@ body {
 @media (max-width: 768px) {
   .time {
     min-height: 80px;
-    font-size: 72px;    
+    font-size: 40px;    
   }
 
   .greeting-container {
@@ -282,5 +282,13 @@ body {
   .name {
     font-size: 32px;
     padding: 5px;
+  }
+  .header{
+    display: block;
+    margin: 0 0 13vw 0;
+  }
+
+  .main{
+    align-items: flex-start;
   }
 }
