@@ -89,7 +89,7 @@ const temperature = document.querySelector('.temperature');
 const weatherDescription = document.querySelector('.weather-description');
 const city = document.querySelector('.city');
 city.value = "Tashkent";
-const windValue = document.getElementById('wind'); 
+const windValue = document.getElementById('wind');
 const humidityValue = document.getElementById('humidity');
 
 async function getWeather() {
@@ -116,21 +116,53 @@ city.addEventListener('keypress', setCity);
 
 const quoteBox = document.getElementById('quote');
 const authorBox = document.getElementById('author');
-async function getQuotes() {  
+async function getQuotes() {
   const quotes = 'quotes.json';
   const res = await fetch(quotes);
-  const data = await res.json(); 
-  console.log(data);
-
+  const data = await res.json();
   const random = Math.floor(Math.random() * data.quotes.length);
-  console.log(data.quotes[random].quote);
-  console.log(data.quotes[random].author);
 
   quoteBox.textContent = data.quotes[random].quote;
   authorBox.textContent = data.quotes[random].author;
-
 }
 getQuotes();
 
 const quoteButton = document.getElementById('change-quote');
 quoteButton.addEventListener('click', getQuotes);
+
+
+const date = new Date();
+const hours = date.getHours();
+const greatingBox = document.getElementById('greeting');
+
+
+
+async function getTimeOfDay() {
+  let timeOfDay = '';
+  if (hours < 6) { timeOfDay = 'night'; }
+  else if (hours < 12) { timeOfDay = 'morning'; }
+  else if (hours < 18) { timeOfDay = 'afternoon'; }
+  else { timeOfDay = 'evening'; }
+  greatingBox.textContent = `Good ${timeOfDay}!`;
+}
+setTimeout(getTimeOfDay, 1000);
+
+const greetingNameBox = document.getElementById('greeting-name');
+console.log(greetingNameBox)
+greetingNameBox.addEventListener('keypress', setLocalStorage);
+
+function setLocalStorage() {
+  localStorage.setItem('city', city.value);
+  localStorage.setItem('name', greetingNameBox.value);
+}
+window.addEventListener('beforeunload', setLocalStorage)
+
+function getLocalStorage() {
+  if(localStorage.getItem('city')) {
+    city.value = localStorage.getItem('city');
+  }
+  if(localStorage.getItem('name')) {
+    greetingNameBox.value = localStorage.getItem('name');
+  }
+}
+window.addEventListener('load', getLocalStorage)
