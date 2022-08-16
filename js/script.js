@@ -83,3 +83,30 @@ function showTime() {
   dateBox.innerHTML = day + ", " + month + " " + date;
 }
 setInterval(showTime, 1000);
+
+const weatherIcon = document.querySelector('.weather-icon');
+const temperature = document.querySelector('.temperature');
+const weatherDescription = document.querySelector('.weather-description');
+const city = document.querySelector('.city');
+city.value = "Tashkent";
+
+
+
+async function getWeather() {
+  const apiWeatherLink = `https://api.openweathermap.org/data/2.5/weather?q=${city.value}&lang=en&appid=38b5fc85b21b65f3aa1e0120d918939a&units=metric`;
+  const res = await fetch(apiWeatherLink);
+  const data = await res.json();
+
+  weatherIcon.className = 'weather-icon owf'
+  weatherIcon.classList.add(`owf-${data.weather[0].id}`);
+  temperature.textContent = `${data.main.temp}°C`;
+  weatherDescription.textContent = data.weather[0].description;
+}
+function setCity(event) {
+  if (event.code === 'Enter') {
+    getWeather();
+    city.blur();
+  }
+}
+document.addEventListener('DOMContentLoaded', getWeather);
+city.addEventListener('keypress', setCity);
