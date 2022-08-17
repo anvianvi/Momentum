@@ -84,6 +84,15 @@ function showTime() {
 }
 setInterval(showTime, 1000);
 
+function calculateTimeOfDay() {
+  let timeOfDay = '';
+  if (hours < 6) { timeOfDay = 'night'; }
+  else if (hours < 12) { timeOfDay = 'morning'; }
+  else if (hours < 18) { timeOfDay = 'afternoon'; }
+  else { timeOfDay = 'evening'; }
+  return timeOfDay;
+}
+
 const weatherIcon = document.querySelector('.weather-icon');
 const temperature = document.querySelector('.temperature');
 const weatherDescription = document.querySelector('.weather-description');
@@ -138,12 +147,7 @@ const greatingBox = document.getElementById('greeting');
 
 
 async function getTimeOfDay() {
-  let timeOfDay = '';
-  if (hours < 6) { timeOfDay = 'night'; }
-  else if (hours < 12) { timeOfDay = 'morning'; }
-  else if (hours < 18) { timeOfDay = 'afternoon'; }
-  else { timeOfDay = 'evening'; }
-  greatingBox.textContent = `Good ${timeOfDay}!`;
+  greatingBox.textContent = `Good ${calculateTimeOfDay()}!`;
 }
 setTimeout(getTimeOfDay, 1000);
 
@@ -158,11 +162,53 @@ function setLocalStorage() {
 window.addEventListener('beforeunload', setLocalStorage)
 
 function getLocalStorage() {
-  if(localStorage.getItem('city')) {
+  if (localStorage.getItem('city')) {
     city.value = localStorage.getItem('city');
   }
-  if(localStorage.getItem('name')) {
+  if (localStorage.getItem('name')) {
     greetingNameBox.value = localStorage.getItem('name');
   }
 }
 window.addEventListener('load', getLocalStorage)
+
+function setBg(timeofday, number) {
+  const img = new Image();
+  img.src = `https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${timeofday}/${number}.jpg`
+  img.onload = () => {
+    body.style.backgroundImage = `url('https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${timeofday}/${number}.jpg`
+  };
+}
+
+
+const body = document.getElementById('body');
+let randomforbackground = Math.floor(Math.random() * 20);
+setBg(calculateTimeOfDay(), randomforbackground);
+
+console.log(body.style.backgroundImage)
+const slideNextButton = document.getElementById('slideNext');
+const slidePrevButton = document.getElementById('slidePrev');
+slideNextButton.addEventListener('click', () => {
+  console.log(randomforbackground)
+  if (randomforbackground < 20) {
+    randomforbackground++;
+    setBg(calculateTimeOfDay(), randomforbackground);
+  } else {
+    randomforbackground = 1;
+    setBg(calculateTimeOfDay(), randomforbackground);
+  }
+});
+slidePrevButton.addEventListener('click', () => {
+  console.log(randomforbackground)
+
+  if (randomforbackground > 1) {
+    randomforbackground--;
+    setBg(calculateTimeOfDay(), randomforbackground);
+  } else {
+    randomforbackground = 20;
+    setBg(calculateTimeOfDay(), randomforbackground);
+  }
+}
+);
+
+
+
