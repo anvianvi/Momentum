@@ -210,5 +210,7 @@ slidePrevButton.addEventListener('click', () => {
 }
 );
 
+const torus = document.getElementById('torus');
+const toeng = document.getElementById('toeng');
 
 
